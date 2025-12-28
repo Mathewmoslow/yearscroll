@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Studiora Year In Review</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+
+<body>
+  <div class="app" id="appRoot">
+    <!-- Ambient / blur wash behind everything -->
+    <div class="ambient">
+      <div class="ambientBlob blobA"></div>
+      <div class="ambientBlob blobB"></div>
+      <div class="ambientBlob blobC"></div>
+      <div class="grain"></div>
+    </div>
+
+    <!-- LANDING -->
+    <section class="scene scene-landing" id="sceneLanding" aria-label="Landing">
+      <div class="parallaxStage" id="parallaxStage" aria-hidden="true">
+        <!-- These are “tiles” that drift with cursor parallax -->
+        <div class="tile tile-xl" data-depth="0.06">
+          <div class="tileMedia tileMedia-gradientA"></div>
+        </div>
+
+        <div class="tile tile-lg" data-depth="0.09">
+          <div class="tileMedia tileMedia-uiMock">
+            <div class="mockTopBar"></div>
+            <div class="mockBody">
+              <div class="mockCard"></div>
+              <div class="mockLines">
+                <span></span><span></span><span></span><span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tile tile-md" data-depth="0.12">
+          <div class="tileMedia tileMedia-pixels"></div>
+        </div>
+
+        <div class="tile tile-md" data-depth="0.14">
+          <div class="tileMedia tileMedia-gradientB"></div>
+        </div>
+
+        <div class="tile tile-sm" data-depth="0.18">
+          <div class="tileMedia tileMedia-schedule">
+            <div class="schedHeader"></div>
+            <div class="schedRow"></div>
+            <div class="schedRow"></div>
+            <div class="schedRow"></div>
+            <div class="schedRow"></div>
+          </div>
+        </div>
+
+        <div class="tile tile-sm" data-depth="0.20">
+          <div class="tileMedia tileMedia-note">
+            <div class="noteTitle"></div>
+            <div class="noteLine"></div>
+            <div class="noteLine"></div>
+            <div class="noteLine"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="landingCenter">
+        <div class="brandRow">
+          <div class="brandMark" aria-hidden="true">
+            <div class="markOuter"></div>
+            <div class="markInner"></div>
+            <div class="markPulse"></div>
+          </div>
+          <div class="brandName">Studiora</div>
+        </div>
+
+        <h1 class="landingTitle">
+          Let’s celebrate what made 2025 special
+        </h1>
+
+        <button class="primaryBtn" id="btnEnter" type="button">
+          Next
+        </button>
+
+        <div class="landingHint">
+          Cursor parallax with delayed response, then a 3D month stack.
+        </div>
+      </div>
+    </section>
+
+    <!-- TIMELINE / MONTHS -->
+    <section class="scene scene-timeline" id="sceneTimeline" aria-label="Timeline" tabindex="-1">
+      <header class="timelineHeader">
+        <div class="timelineBrand">
+          <div class="brandDot" aria-hidden="true"></div>
+          <div class="timelineTitle">
+            <div class="timelineName">Studiora</div>
+            <div class="timelineSub">2025 Year In Review</div>
+          </div>
+        </div>
+
+        <div class="timelineRight">
+          <div class="progressWrap" aria-label="Progress">
+            <div class="progressLabel" id="progressLabel">Progress 0%</div>
+            <div class="progressBar">
+              <div class="progressFill" id="progressFill"></div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="timelineStage">
+        <div class="stackWrap">
+          <!-- Blurred color wash outside the focused card -->
+          <div class="stackWash" aria-hidden="true"></div>
+
+          <!-- Cards are injected here -->
+          <div class="cardStack" id="cardStack" aria-live="polite"></div>
+        </div>
+      </div>
+
+      <footer class="timelineFooter">
+        <button class="navBtn" id="btnPrev" type="button" aria-label="Previous month">
+          <span class="navIcon" aria-hidden="true">←</span>
+        </button>
+
+        <button class="navBtn navBtnWide" id="btnNext" type="button" aria-label="Next month">
+          <span>Next</span>
+          <span class="navIcon" aria-hidden="true">→</span>
+        </button>
+
+        <div class="timelineTip" id="timelineTip">
+          Scroll or trackpad to advance
+        </div>
+      </footer>
+    </section>
+  </div>
+
+  <!-- Libraries (CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/Observer.min.js"></script>
+
+  <!-- Optional but excellent smooth scrolling feel -->
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
+
+  <script src="./app.js"></script>
+</body>
+</html>
