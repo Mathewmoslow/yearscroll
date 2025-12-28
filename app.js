@@ -280,15 +280,14 @@
     const upcomingDepth = clamp(d, 0, 4);
 
     // Visible preview offsets (same axis, but shifted so you can see them)
-    // Tweak these two values to taste:
-    const offsetXPerStep = 74;   // how much each next card peeks to the right
-    const offsetYPerStep = 18;   // subtle downward stack
+    const offsetXPerStep = 50;   // how much each next card peeks to the right
+    const offsetYPerStep = 35;   // stack downward more visibly
 
     // Depth/tilt controls
-    const zPerStep = 150;        // push back in Z
-    const scalePerStep = 0.055;  // shrink as it goes back
-    const rotXPerStep = 5.5;     // tilt backward
-    const rotYPerStep = -2.0;    // slight yaw
+    const zPerStep = 120;        // push back in Z
+    const scalePerStep = 0.12;   // shrink more noticeably as it goes back
+    const rotXPerStep = 3;       // subtle tilt backward
+    const rotYPerStep = -1.5;    // slight yaw
 
     // Active stays centered, upcoming shift right/down
     const translateX = upcomingDepth * offsetXPerStep;
@@ -299,11 +298,11 @@
     const rotateY = upcomingDepth * rotYPerStep;
     const scale = 1 - upcomingDepth * scalePerStep;
 
-    // Hide previous cards instead of stacking them
-    const opacity = d < 0 ? 0 : (d === 0 ? 1 : clamp(1 - (d * 0.20), 0.0, 1.0));
+    // Hide previous cards, show upcoming with fading opacity
+    const opacity = d < 0 ? 0 : (d === 0 ? 1 : clamp(1 - (d * 0.15), 0.3, 1.0));
 
-    // Blur only for previews, not active
-    const blur = d === 0 ? 0 : clamp(upcomingDepth * 1.7, 0, 10);
+    // Stronger blur for background cards
+    const blur = d === 0 ? 0 : clamp(upcomingDepth * 2.5, 0, 8);
 
     // Ensure active is always on top, then 1,2,3 behind it
     const zIndex = 1000 - upcomingDepth;
