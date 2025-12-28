@@ -89,6 +89,7 @@ body{
 }
 .scene-landing{
   z-index:3;
+  overflow:hidden;
 }
 .scene-timeline{
   z-index:2;
@@ -100,10 +101,14 @@ body{
 /* Landing parallax stage */
 .parallaxStage{
   position:absolute;
-  inset:0;
+  /* Extend canvas beyond viewport for panning room */
+  inset:-15%;
+  width:130%;
+  height:130%;
   perspective:900px;
   transform-style:preserve-3d;
   pointer-events:none;
+  will-change:transform;
 }
 
 .tile{

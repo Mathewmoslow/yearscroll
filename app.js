@@ -99,44 +99,38 @@
 
   /* --------------------------
      LANDING PARALLAX (cursor)
+     - Entire canvas pans opposite to cursor
+     - Heavy, delayed "braking" feel
   --------------------------- */
 
   function initLandingParallax() {
-    const tiles = Array.prototype.slice.call(parallaxStage.querySelectorAll(".tile"));
-    const quickX = [];
-    const quickY = [];
-    const quickRot = [];
+    // How far the canvas can pan (matches CSS inset of -15%)
+    const panRangeX = window.innerWidth * 0.15;
+    const panRangeY = window.innerHeight * 0.15;
 
-    tiles.forEach(function (tile) {
-      quickX.push(gsap.quickTo(tile, "x", { duration: 0.65, ease: "power3.out" }));
-      quickY.push(gsap.quickTo(tile, "y", { duration: 0.65, ease: "power3.out" }));
-      quickRot.push(gsap.quickTo(tile, "rotationZ", { duration: 0.9, ease: "power3.out" }));
+    // QuickTo for the heavy, delayed pan with braking ease
+    const stageX = gsap.quickTo(parallaxStage, "x", {
+      duration: 1.2,
+      ease: "power2.out"  // braking ease - fast start, slow stop
+    });
+    const stageY = gsap.quickTo(parallaxStage, "y", {
+      duration: 1.2,
+      ease: "power2.out"
     });
 
     function onMove(ev) {
-      const rect = parallaxStage.getBoundingClientRect();
-      const px = (ev.clientX - rect.left) / rect.width;
-      const py = (ev.clientY - rect.top) / rect.height;
+      // Normalize cursor position: -1 to 1
+      const nx = (ev.clientX / window.innerWidth - 0.5) * 2;
+      const ny = (ev.clientY / window.innerHeight - 0.5) * 2;
 
-      const nx = (px - 0.5) * 2;
-      const ny = (py - 0.5) * 2;
+      // Pan opposite to cursor (negative) for that "dragging" feel
+      stageX(-nx * panRangeX);
+      stageY(-ny * panRangeY);
 
-      tiles.forEach(function (tile, i) {
-        const depthAttr = tile.getAttribute("data-depth");
-        const depth = depthAttr ? parseFloat(depthAttr) : 0.10;
-
-        const dx = nx * 120 * depth;
-        const dy = ny * 90 * depth;
-        const rz = nx * 6 * depth;
-
-        quickX[i](dx);
-        quickY[i](dy);
-        quickRot[i](rz);
-      });
-
-      gsap.to(".blobA", { x: nx * -20, y: ny * -18, duration: 0.9, ease: "power2.out" });
-      gsap.to(".blobB", { x: nx * 16, y: ny * 14, duration: 0.9, ease: "power2.out" });
-      gsap.to(".blobC", { x: nx * -12, y: ny * 20, duration: 0.9, ease: "power2.out" });
+      // Blobs still get subtle movement for extra depth
+      gsap.to(".blobA", { x: nx * -30, y: ny * -25, duration: 1.4, ease: "power2.out" });
+      gsap.to(".blobB", { x: nx * 25, y: ny * 20, duration: 1.4, ease: "power2.out" });
+      gsap.to(".blobC", { x: nx * -18, y: ny * 28, duration: 1.4, ease: "power2.out" });
     }
 
     window.addEventListener("mousemove", onMove, { passive: true });
@@ -150,13 +144,14 @@
       repeat: -1
     });
 
+    // Gentle floating animation on tiles
     gsap.to(".tile", {
-      y: "+=10",
-      duration: 3.8,
+      y: "+=12",
+      duration: 4.2,
       ease: "sine.inOut",
       yoyo: true,
       repeat: -1,
-      stagger: 0.12
+      stagger: 0.15
     });
   }
 
